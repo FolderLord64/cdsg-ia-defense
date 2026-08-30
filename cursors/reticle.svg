@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!--
+    CURSEUR PAR DÉFAUT — réticule
+    Un halo blanc semi-transparent est dessiné en dessous de chaque
+    trait bleu pour garder le curseur visible sur n'importe quel
+    fond (clair ou sombre). Le point de "prise" (hotspot) du
+    curseur est le centre exact de ce SVG (16,16) — voir le "16 16"
+    dans styles/global.css où ce fichier est référencé.
+  -->
+
+  <!-- Halo de contraste (dessiné derrière, légèrement plus épais) -->
+  <g stroke="white" stroke-opacity="0.85" stroke-width="3" stroke-linecap="round">
+    <line x1="16" y1="2" x2="16" y2="10" />
+    <line x1="16" y1="22" x2="16" y2="30" />
+    <line x1="2" y1="16" x2="10" y2="16" />
+    <line x1="22" y1="16" x2="30" y2="16" />
+    <circle cx="16" cy="16" r="7" fill="none" />
+  </g>
+
+  <!-- Traits et cercle du réticule -->
+  <g stroke="#3d7ea6" stroke-width="1.6" stroke-linecap="round">
+    <line x1="16" y1="2" x2="16" y2="10" />
+    <line x1="16" y1="22" x2="16" y2="30" />
+    <line x1="2" y1="16" x2="10" y2="16" />
+    <line x1="22" y1="16" x2="30" y2="16" />
+    <circle cx="16" cy="16" r="7" fill="none" />
+  </g>
+
+  <!-- Point central -->
+  <circle cx="16" cy="16" r="1.6" fill="#3d7ea6" />
+</svg>
