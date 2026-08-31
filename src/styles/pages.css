@@ -1,0 +1,888 @@
+/* ============================================================
+   PAGES.CSS — Mise en page du contenu (hero, grilles, sections)
+   ============================================================
+   Regroupe tous les styles "de contenu" (par opposition à
+   navigation.css qui gère uniquement le menu). Organisé section
+   par section pour retrouver facilement quoi modifier.
+   ============================================================ */
+
+/* ---------- Conteneur principal ---------- */
+.app-main {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md) var(--space-xl);
+  min-height: 70vh;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  /* Rejoue à chaque changement de page (voir keyframes dans global.css) */
+  animation: page-enter var(--duration-slow) var(--ease-in-out);
+}
+
+/* ============================================================
+   COULEURS D'ACCENT PAR THÈME
+   ============================================================
+   Chaque thème a un "accent" ('steel', 'military' ou 'danger'
+   pour Risques et Dérives) défini dans data/themes.js. Ces
+   classes posent une variable --card-accent réutilisée par les
+   cartes et en-têtes pour se colorer en conséquence.
+   ============================================================ */
+.accent-steel {
+  --card-accent: var(--accent-steel);
+}
+.accent-military {
+  --card-accent: var(--accent-military);
+}
+.accent-danger {
+  --card-accent: var(--accent-danger);
+}
+
+/* ============================================================
+   HERO (page d'accueil)
+   ============================================================ */
+.hero {
+  padding: var(--space-xl) 0 var(--space-md);
+  max-width: var(--content-max-width);
+}
+
+/* Logo affiché au-dessus du titre sur la page d'accueil */
+.hero-logo {
+  margin-bottom: var(--space-sm);
+}
+
+.hero-title {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.05;
+  margin: var(--space-sm) 0;
+}
+
+.hero-title-accent {
+  color: var(--accent-steel);
+}
+
+.hero-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 60ch;
+}
+
+/* ============================================================
+   GRILLE DES THÈMES (page d'accueil)
+   ============================================================ */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.theme-card {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  min-height: 190px;
+  position: relative;
+  border-top: 3px solid var(--card-accent, var(--accent-steel));
+}
+.theme-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--card-accent, var(--accent-steel));
+}
+
+.theme-card-number {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--card-accent, var(--accent-steel));
+  letter-spacing: 0.08em;
+}
+
+.theme-card-title {
+  font-size: 1.35rem;
+  margin: 0.4em 0 0.5em;
+}
+
+.theme-card-tagline {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+
+.theme-card-arrow {
+  align-self: flex-end;
+  font-size: 1.2rem;
+  color: var(--card-accent, var(--accent-steel));
+  transition: transform var(--duration-base) var(--ease-in-out);
+}
+.theme-card:hover .theme-card-arrow {
+  transform: translateX(4px);
+}
+
+/* ---------- Bandeau vers la page Synthèse ---------- */
+.synthese-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border-top: 3px solid var(--accent-steel);
+}
+.synthese-banner:hover {
+  border-color: var(--accent-steel);
+}
+.synthese-banner-title {
+  font-size: 1.15rem;
+  margin-top: 0.3em;
+}
+
+/* ---------- Lien vers l'archive du site 2024-2025 ---------- */
+.archive-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border-top: 3px solid var(--accent-military);
+}
+.archive-banner:hover {
+  border-color: var(--accent-military);
+}
+.archive-banner .theme-card-arrow {
+  color: var(--accent-military);
+}
+
+/* ============================================================
+   EN-TÊTE D'UNE PAGE THÈME
+   ============================================================ */
+.theme-header {
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+  border-top: 3px solid var(--card-accent, var(--accent-steel));
+  padding-top: var(--space-sm);
+}
+
+.theme-header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  flex-wrap: wrap;
+}
+
+.theme-header-icon {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  color: var(--card-accent, var(--accent-steel));
+  background-color: rgba(124, 143, 110, 0.12);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: transform var(--duration-slow) var(--ease-in-out);
+}
+.theme-header-icon:hover {
+  transform: rotate(8deg) scale(1.05);
+}
+
+.theme-header-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin: 0.3em 0 0.2em;
+}
+
+/* ============================================================
+   RÉSUMÉ "EN BREF" + ANALOGIE
+   ============================================================ */
+.theme-brief {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.theme-brief-item {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.theme-brief-analogie {
+  border-style: dashed;
+}
+
+.theme-brief-text {
+  color: var(--text-primary);
+  margin-top: 0.4em;
+  font-size: 0.98rem;
+}
+
+.theme-header-note {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+  max-width: 60ch;
+}
+
+/* ============================================================
+   SECTIONS DE CONTENU (Définition, Fonctionnement...)
+   ============================================================ */
+.theme-section-title {
+  font-size: 1.3rem;
+  margin-bottom: 0.6em;
+}
+
+.theme-section-text {
+  color: var(--text-secondary);
+  max-width: var(--content-max-width);
+  font-size: 1.02rem;
+}
+
+.theme-section-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  max-width: var(--content-max-width);
+}
+.theme-section-list li {
+  color: var(--text-secondary);
+  padding-left: 1.3em;
+  position: relative;
+}
+/* Puce personnalisée façon "chevron", cohérente avec l'accent du site */
+.theme-section-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-steel);
+}
+
+/* Deux colonnes pour Capacités / Limites côte à côte */
+.theme-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+/* ============================================================
+   EXEMPLES CIVIL / MILITAIRE
+   ============================================================ */
+.theme-examples {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.example-box {
+  padding: var(--space-md);
+}
+
+.example-box-photo {
+  position: relative;
+  margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-sm);
+  overflow: hidden;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+.example-box-photo img {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-in-out);
+}
+.example-box:hover .example-box-photo img {
+  transform: scale(1.04);
+}
+.example-box-credit {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0.15em 0.5em;
+  border-radius: var(--radius-sm);
+}
+
+.example-box-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-bottom: 0.7em;
+}
+
+.example-box-icon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: transform var(--duration-base) var(--ease-in-out);
+}
+.example-box:hover .example-box-icon {
+  transform: scale(1.08) rotate(-4deg);
+}
+.example-box-icon.icon-civil {
+  color: var(--accent-steel);
+  background-color: rgba(91, 155, 196, 0.12);
+}
+.example-box-icon.icon-militaire {
+  color: var(--accent-military);
+  background-color: rgba(124, 143, 110, 0.12);
+}
+
+.example-box-text {
+  color: var(--text-primary);
+  margin-top: 0.7em;
+}
+
+/* ============================================================
+   ZOOMS (deepfakes, drones — thème Risques et Dérives)
+   ============================================================ */
+.zooms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.zoom-card {
+  padding: var(--space-md);
+  border-top: 3px solid var(--accent-danger);
+}
+
+.zoom-card-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.6em;
+}
+
+.zoom-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-bottom: 0.6em;
+}
+.zoom-card-header .zoom-card-title {
+  margin-bottom: 0;
+}
+.zoom-card-icon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-danger);
+  background-color: rgba(196, 104, 91, 0.12);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.zoom-card-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-danger);
+  margin-top: 0.9em;
+  margin-bottom: 0.25em;
+}
+.zoom-card-label:first-of-type {
+  margin-top: 0;
+}
+
+.zoom-card-text {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* ============================================================
+   PAGE SYNTHÈSE
+   ============================================================ */
+.threads {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.thread-card {
+  padding: var(--space-md) var(--space-lg);
+  position: relative;
+  border-top: 3px solid var(--accent-steel);
+}
+
+.thread-card-number {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-steel);
+}
+
+.thread-card-title {
+  font-size: 1.3rem;
+  margin: 0.3em 0 0.7em;
+}
+
+.thread-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin-bottom: 0.8em;
+}
+/* Les badges de thèmes liés sont aussi des liens cliquables */
+.thread-card-tags a.badge {
+  transition: background-color var(--duration-fast) var(--ease-in-out);
+}
+.thread-card-tags a.badge:hover {
+  background-color: rgba(91, 155, 196, 0.22);
+}
+
+.thread-card-text {
+  color: var(--text-secondary);
+}
+
+/* ---------- Tableau récapitulatif ---------- */
+.summary-table-wrap {
+  overflow-x: auto;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-sm);
+}
+
+.summary-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-steel);
+  padding: 0.7em 1em;
+  border-bottom: 1px solid var(--border-color-strong);
+}
+
+.summary-table td {
+  padding: 0.9em 1em;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+.summary-table tr:hover td {
+  color: var(--text-primary);
+  background-color: var(--bg-tertiary);
+}
+
+/* ============================================================
+   LIENS / DIVERS
+   ============================================================ */
+.back-link {
+  display: inline-block;
+  margin-top: var(--space-md);
+  color: var(--accent-steel);
+  border-bottom: 1px dotted var(--accent-steel);
+  font-size: 0.95rem;
+  width: fit-content;
+}
+.back-link:hover {
+  border-bottom-style: solid;
+}
+
+/* ============================================================
+   QUIZ DE RÉVISION — voir components/ThemeQuiz.jsx
+   ============================================================ */
+.quiz-card {
+  padding: var(--space-md) var(--space-lg);
+  border-top: 3px solid var(--card-accent, var(--accent-steel));
+}
+
+.quiz-question {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0.6em 0 0.9em;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+
+.quiz-option {
+  text-align: left;
+  padding: 0.7em 1em;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  transition: border-color var(--duration-fast) var(--ease-in-out),
+    background-color var(--duration-fast) var(--ease-in-out),
+    transform var(--duration-fast) var(--ease-in-out);
+}
+.quiz-option:not(:disabled):hover {
+  border-color: var(--accent-steel);
+  transform: translateX(3px);
+}
+.quiz-option:disabled {
+  cursor: default;
+}
+.quiz-option-correct {
+  border-color: var(--accent-military);
+  background-color: rgba(124, 143, 110, 0.18);
+}
+.quiz-option-incorrect {
+  border-color: var(--accent-danger);
+  background-color: rgba(196, 104, 91, 0.18);
+}
+
+.quiz-feedback {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-color);
+  animation: page-enter var(--duration-base) var(--ease-in-out);
+}
+
+.quiz-feedback-verdict {
+  font-weight: 600;
+  margin-bottom: 0.4em;
+}
+
+.quiz-feedback-explanation {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: var(--space-sm);
+}
+
+.quiz-next,
+.quiz-restart {
+  background-color: var(--accent-steel);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.6em 1.2em;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: transform var(--duration-fast) var(--ease-in-out),
+    opacity var(--duration-fast) var(--ease-in-out);
+}
+.quiz-next:hover,
+.quiz-restart:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.quiz-score {
+  font-size: 1.6rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0.4em 0 var(--space-sm);
+}
+
+/* ============================================================
+   NAVIGATION THÈME PRÉCÉDENT / SUIVANT
+   ============================================================ */
+.theme-prev-next {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.prev-next-link {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-base) var(--ease-in-out),
+    transform var(--duration-base) var(--ease-in-out);
+}
+.prev-next-link:hover {
+  border-color: var(--accent-steel);
+  transform: translateY(-2px);
+}
+.prev-next-next {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.prev-next-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-steel);
+}
+
+.prev-next-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin-top: 0.3em;
+}
+
+.app-footer {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8em;
+}
+
+/* ---------- Lien Instagram ---------- */
+.instagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: normal;
+  padding: 0.5em 1em;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast) var(--ease-in-out),
+    border-color var(--duration-fast) var(--ease-in-out),
+    transform var(--duration-fast) var(--ease-in-out);
+}
+.instagram-link:hover {
+  color: var(--accent-steel);
+  border-color: var(--accent-steel);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   PAGE 404
+   ============================================================ */
+.notfound-page {
+  align-items: center;
+  text-align: center;
+  padding-top: var(--space-xl);
+}
+
+.notfound-title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin: 0.4em 0;
+}
+
+.notfound-text {
+  color: var(--text-secondary);
+  max-width: 60ch;
+}
+
+/* ---------- Radar décoratif ---------- */
+.notfound-radar {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: var(--space-lg) auto;
+  border-radius: 50%;
+  border: 1px solid var(--border-color-strong);
+  background: repeating-radial-gradient(
+    circle,
+    var(--border-color) 0,
+    var(--border-color) 1px,
+    transparent 1px,
+    transparent 44px
+  );
+  overflow: hidden;
+}
+
+.notfound-radar-sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--accent-steel) 0deg,
+    transparent 50deg
+  );
+  opacity: 0.3;
+  transform-origin: center;
+}
+/* La rotation ne se joue QUE si l'interrupteur est activé */
+.notfound-radar.is-animated .notfound-radar-sweep {
+  animation: radar-spin 3s linear infinite;
+}
+@keyframes radar-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.notfound-radar-blip {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-steel);
+  opacity: 0.2;
+}
+.notfound-radar.is-animated .notfound-radar-blip {
+  animation: radar-blip 4s var(--ease-in-out) infinite;
+}
+@keyframes radar-blip {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+/* ---------- Interrupteur "arrière-plan animé" ---------- */
+.notfound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+.notfound-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.notfound-toggle-track {
+  width: 40px;
+  height: 22px;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color-strong);
+  border-radius: 999px;
+  position: relative;
+  transition: background-color var(--duration-base) var(--ease-in-out);
+}
+.notfound-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--text-secondary);
+  transition: transform var(--duration-base) var(--ease-in-out),
+    background-color var(--duration-base) var(--ease-in-out);
+}
+.notfound-toggle input:checked + .notfound-toggle-track {
+  background-color: var(--accent-steel);
+}
+.notfound-toggle input:checked + .notfound-toggle-track .notfound-toggle-thumb {
+  transform: translateX(18px);
+  background-color: var(--bg-primary);
+}
+.notfound-toggle input:focus-visible + .notfound-toggle-track {
+  outline: 2px solid var(--accent-steel);
+  outline-offset: 2px;
+}
+
+.notfound-actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ============================================================
+   PAGE SOURCES
+   ============================================================ */
+.sources-group {
+  margin-bottom: var(--space-sm);
+}
+.sources-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.sources-item {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  padding-left: 1.2em;
+  position: relative;
+}
+.sources-item::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-steel);
+}
+.sources-item a {
+  color: var(--accent-steel);
+  border-bottom: 1px dotted var(--accent-steel);
+}
+.sources-publisher {
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+
+/* ============================================================
+   BOUTON "REMONTER EN HAUT" — voir components/ScrollTopButton.jsx
+   ============================================================ */
+.scroll-top-button {
+  position: fixed;
+  bottom: var(--space-md);
+  right: var(--space-md);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--accent-steel);
+  color: var(--bg-primary);
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  z-index: 30;
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-in-out),
+    transform var(--duration-base) var(--ease-in-out);
+}
+.scroll-top-button.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.scroll-top-button:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* ============================================================
+   RESPONSIVE — MOBILE
+   ============================================================ */
+@media (max-width: 720px) {
+  .app-main {
+    padding: var(--space-md) var(--space-sm) var(--space-lg);
+  }
+
+  .theme-two-col,
+  .theme-examples,
+  .zooms,
+  .theme-brief,
+  .theme-prev-next {
+    grid-template-columns: 1fr;
+  }
+
+  .prev-next-next {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .synthese-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

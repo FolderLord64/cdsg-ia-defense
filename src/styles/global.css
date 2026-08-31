@@ -1,0 +1,246 @@
+/* ============================================================
+   GLOBAL.CSS — Feuille de style globale du site
+   ============================================================
+   Ce fichier centralise :
+     1. Les polices (variables --font-*)
+     2. Les couleurs, en mode SOMBRE (par défaut) et CLAIR
+     3. Les espacements / rayons / ombres réutilisés partout
+     4. Les styles de base (reset, typographie, scrollbar...)
+
+   → Pour changer une couleur du site entier, modifie UNIQUEMENT
+     les variables ci-dessous (section "PALETTE"). Tout le reste
+     du site les utilise via var(--nom-de-la-variable), donc un
+     seul changement ici se répercute partout.
+   ============================================================ */
+
+/* ---------- RESET DE BASE ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ============================================================
+   PALETTE — MODE SOMBRE (thème par défaut)
+   ============================================================
+   Appliquée quand <html data-theme="dark"> (valeur par défaut,
+   voir ThemeContext.jsx). Direction "Hybride Défense × Tech" :
+   fond façon salle de contrôle, accent bleu acier (tech/radar)
+   et vert militaire désaturé (défense).
+   ============================================================ */
+:root,
+[data-theme='dark'] {
+  /* --- Fonds --- */
+  --bg-primary: #0d1117;      /* fond général de la page */
+  --bg-secondary: #161b22;    /* cartes, sections surélevées */
+  --bg-tertiary: #1c2330;     /* survol, éléments actifs */
+  --bg-overlay: rgba(13, 17, 23, 0.85); /* fond du menu latéral */
+
+  /* --- Accents --- */
+  --accent-steel: #5b9bc4;       /* bleu acier — accent principal (tech/radar) */
+  --accent-steel-dim: #3d7ea6;   /* variante plus sombre (hover, bordures) */
+  --accent-military: #7c8f6e;    /* vert militaire désaturé — accent secondaire (défense) */
+  --accent-danger: #c4685b;      /* rouge désaturé — utilisé pour "Risques et Dérives" */
+
+  /* --- Textes --- */
+  --text-primary: #e8eaed;    /* texte principal */
+  --text-secondary: #9aa4b2;  /* texte secondaire, légendes */
+  --text-muted: #6b7280;      /* texte discret (labels, métadonnées) */
+
+  /* --- Bordures --- */
+  --border-color: #2a3140;
+  --border-color-strong: #3a4356;
+
+  /* --- Ombres --- */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+
+  /* --- Grille de fond (motif filigrane) --- */
+  --grid-line-color: rgba(91, 155, 196, 0.06);
+  --grid-dot-color: rgba(91, 155, 196, 0.12);
+}
+
+/* ============================================================
+   PALETTE — MODE CLAIR
+   ============================================================
+   Appliquée quand <html data-theme="light"> (via le bouton
+   soleil/lune dans la navigation). Mêmes accents que le mode
+   sombre mais légèrement assombris pour garder un bon contraste
+   sur fond clair.
+   ============================================================ */
+[data-theme='light'] {
+  --bg-primary: #f4f5f7;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e8eaed;
+  --bg-overlay: rgba(244, 245, 247, 0.9);
+
+  --accent-steel: #2c6a8f;
+  --accent-steel-dim: #1f4f6b;
+  --accent-military: #566b48;
+  --accent-danger: #a8483a;
+
+  --text-primary: #1a1f28;
+  --text-secondary: #4a5261;
+  --text-muted: #6b7280;
+
+  --border-color: #dde1e7;
+  --border-color-strong: #c5cbd4;
+
+  --shadow-card: 0 4px 24px rgba(20, 25, 35, 0.08);
+
+  --grid-line-color: rgba(44, 106, 143, 0.06);
+  --grid-dot-color: rgba(44, 106, 143, 0.12);
+}
+
+/* ============================================================
+   POLICES
+   ============================================================
+   --font-display : titres (h1, h2, labels "HUD")
+   --font-body    : corps de texte. -apple-system charge SF Pro
+                    Display nativement sur macOS/iOS ; Inter sert
+                    de repli pour les autres systèmes.
+   --font-mono    : sigles techniques (GAN, LAWS...), petits labels
+   ============================================================ */
+:root {
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter',
+    sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Espacements réutilisés (échelle simple en rem) */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+
+  /* Largeur max du contenu texte, pour garder une lecture confortable */
+  --content-max-width: 780px;
+  --page-max-width: 1180px;
+
+  /* Rayons d'arrondi des coins, réutilisés partout (cartes, boutons,
+     info-bulles...). Pour rendre les coins plus/moins arrondis,
+     change uniquement ces valeurs. */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  /* Courbe d'accélération "ease-in-out" utilisée par toutes les
+     animations/transitions du site (survols, menu, page, tooltip...).
+     Une seule variable = une seule sensation de mouvement cohérente
+     partout. Pour changer le "ressenti" des animations (plus vif,
+     plus lent), modifie uniquement cette valeur. */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 0.2s;
+  --duration-base: 0.35s;
+  --duration-slow: 0.5s;
+}
+
+/* ---------- STYLES DE BASE ---------- */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  transition: background-color var(--duration-base) var(--ease-in-out),
+    color var(--duration-base) var(--ease-in-out);
+  /* La transition ci-dessus donne un fondu doux au changement clair/sombre */
+
+  /* ---------- CURSEUR PERSONNALISÉ (réticule) ----------
+     Valeur calculée dans main.jsx (tient compte du paramètre
+     "base" de vite.config.js) et stockée dans --cursor-default.
+     "16 16" = le point exact du curseur qui correspond à la
+     position de la souris (le centre du réticule). */
+  cursor: var(--cursor-default);
+}
+
+/* Curseur "actif" (réticule verrouillé) sur tout élément cliquable */
+a,
+button,
+[role='button'],
+input,
+select,
+textarea {
+  cursor: var(--cursor-active);
+}
+
+/* ============================================================
+   ANIMATION D'ENTRÉE DE PAGE
+   ============================================================
+   Chaque page (Home, ThemePage, Synthese) a un conteneur racine
+   avec la classe .page (voir styles/pages.css). Comme React
+   démonte/remonte ce conteneur à chaque changement de route, cette
+   animation CSS se rejoue automatiquement à chaque navigation —
+   aucun code JavaScript supplémentaire n'est nécessaire.
+   ============================================================ */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+/* ---------- SCROLLBAR (Chrome/Edge/Safari) ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color-strong);
+  border-radius: 6px;
+}
+
+/* ============================================================
+   ACCESSIBILITÉ — focus clavier visible
+   ============================================================
+   Important pour la navigation au clavier : ne jamais supprimer
+   ce contour sans le remplacer par un équivalent visible.
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--accent-steel);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   RÉDUCTION DES ANIMATIONS
+   ============================================================
+   Respecte le réglage système "réduire les animations" pour les
+   personnes sensibles au mouvement.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

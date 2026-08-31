@@ -1,0 +1,213 @@
+/* ============================================================
+   THEME.CSS — Éléments visuels "signature" du site
+   ============================================================
+   Ce fichier regroupe les classes utilitaires réutilisées par
+   plusieurs composants, pour garder une identité visuelle
+   cohérente (angles chanfreinés, crochets type "viseur/HUD",
+   labels techniques en majuscules espacées...).
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   .chamfer-card
+   ------------------------------------------------------------
+   La carte "signature" du site : coins arrondis (border-radius),
+   utilisée pour toutes les cartes/blocs (thèmes, exemples,
+   sections). Le nom de la classe garde l'historique du projet
+   (elle utilisait des coins coupés en biais au départ) mais son
+   usage dans les composants n'a pas besoin de changer.
+
+   Pour changer le degré d'arrondi : modifie --radius-md dans
+   styles/global.css (une seule variable pour tout le site).
+   ------------------------------------------------------------ */
+.chamfer-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  position: relative;
+  transition: border-color var(--duration-base) var(--ease-in-out),
+    transform var(--duration-base) var(--ease-in-out),
+    box-shadow var(--duration-base) var(--ease-in-out);
+}
+
+/* Variante à arrondi plus petit, pour les éléments compacts
+   (badges, boutons, tags de glossaire) */
+.chamfer-sm {
+  border-radius: var(--radius-sm);
+}
+
+/* ------------------------------------------------------------
+   .corner-brackets
+   ------------------------------------------------------------
+   Ajoute 4 petits crochets aux coins d'un élément, façon
+   "réticule de visée" / cadre de ciblage HUD. Discret, en
+   ::before/::after via un dégradé de bordure — utilisé sur les
+   images/illustrations et sur la carte mise en avant de la page
+   d'accueil.
+   ------------------------------------------------------------ */
+.corner-brackets {
+  position: relative;
+}
+.corner-brackets::before,
+.corner-brackets::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+.corner-brackets::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--accent-steel);
+  border-left: 2px solid var(--accent-steel);
+}
+.corner-brackets::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--accent-steel);
+  border-right: 2px solid var(--accent-steel);
+}
+
+/* ------------------------------------------------------------
+   .eyebrow
+   ------------------------------------------------------------
+   Petit label technique au-dessus d'un titre (ex. "THÈME 03",
+   "EXEMPLE CIVIL"). Police mono, majuscules, espacement large
+   pour un rendu "étiquette d'écran de contrôle".
+   ------------------------------------------------------------ */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-steel);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+/* Petit trait devant l'eyebrow, façon indicateur de statut */
+.eyebrow::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-steel);
+  display: inline-block;
+}
+
+/* ------------------------------------------------------------
+   .divider
+   ------------------------------------------------------------
+   Ligne de séparation fine, utilisée entre les sections d'une
+   page thème plutôt que de gros espaces vides.
+   ------------------------------------------------------------ */
+.divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--border-color-strong) 0%,
+    transparent 100%
+  );
+  margin: var(--space-lg) 0;
+}
+
+/* ------------------------------------------------------------
+   .badge-civil / .badge-militaire
+   ------------------------------------------------------------
+   Petites étiquettes de couleur pour distinguer visuellement,
+   d'un coup d'œil, un exemple civil d'un exemple militaire.
+   ------------------------------------------------------------ */
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3em 0.7em;
+  display: inline-block;
+  border-radius: var(--radius-sm);
+}
+.badge-civil {
+  color: var(--accent-steel);
+  background-color: rgba(91, 155, 196, 0.12);
+  border: 1px solid var(--accent-steel-dim);
+}
+.badge-militaire {
+  color: var(--accent-military);
+  background-color: rgba(124, 143, 110, 0.12);
+  border: 1px solid var(--accent-military);
+}
+
+/* ------------------------------------------------------------
+   TOOLTIP (glossaire) — voir components/Tooltip.jsx
+   ------------------------------------------------------------ */
+.tooltip-wrapper {
+  position: relative;
+  display: inline;
+}
+
+.tooltip-trigger {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: var(--cursor-help);
+  /* Soulignement en pointillés pour signaler que le mot est
+     interactif, sans casser la lecture du paragraphe */
+  border-bottom: 1px dotted var(--accent-steel);
+  transition: color var(--duration-fast) var(--ease-in-out);
+}
+.tooltip-trigger:hover,
+.tooltip-trigger[aria-expanded='true'] {
+  color: var(--accent-steel);
+}
+
+.tooltip-bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(280px, 80vw);
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--accent-steel-dim);
+  padding: var(--space-xs);
+  z-index: 50;
+  box-shadow: var(--shadow-card);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: left;
+  border-radius: var(--radius-sm);
+  /* Petite animation d'apparition en ease-in-out (échelle + fondu) */
+  animation: tooltip-pop var(--duration-fast) var(--ease-in-out);
+  transform-origin: bottom center;
+}
+
+@keyframes tooltip-pop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.9) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1) translateY(0);
+  }
+}
+
+.tooltip-term {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-steel);
+  margin-bottom: 0.35em;
+}
+
+.tooltip-definition {
+  display: block;
+  color: var(--text-primary);
+}

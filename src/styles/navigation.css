@@ -1,0 +1,213 @@
+/* ============================================================
+   NAVIGATION.CSS — Barre supérieure + menu latéral repliable
+   ============================================================ */
+
+/* ---------- Fond de grille en filigrane (GridBackground.jsx) ---------- */
+.grid-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ---------- Barre supérieure fixe ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 var(--space-md);
+  background-color: var(--bg-overlay);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+/* ------------------------------------------------------------
+   .lycee-logo-badge — voir components/LyceeLogo.jsx
+   ------------------------------------------------------------
+   Petit fond clair arrondi derrière le logo du lycée : ses
+   couleurs (bleu/rouge/jaune/vert) sont pensées pour un fond
+   clair, ce badge les garde lisibles même en mode sombre.
+   ------------------------------------------------------------ */
+.lycee-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: var(--radius-sm);
+  padding: 0 0.5em;
+  flex-shrink: 0;
+  /* Animation d'entrée douce + transition sur l'ombre au survol */
+  transition: transform 0.3s var(--ease-in-out), box-shadow 0.3s
+    var(--ease-in-out);
+}
+.lycee-logo-badge img {
+  display: block;
+  width: auto;
+}
+.topbar-brand:hover .lycee-logo-badge {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px rgba(91, 155, 196, 0.25);
+}
+
+.topbar-brand-accent {
+  color: var(--accent-steel);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* ---------- Bouton icône générique (clair/sombre) ---------- */
+.icon-button {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: border-color var(--duration-base) var(--ease-in-out),
+    color var(--duration-base) var(--ease-in-out),
+    transform var(--duration-base) var(--ease-in-out);
+}
+.icon-button:hover {
+  border-color: var(--accent-steel);
+  color: var(--accent-steel);
+  transform: rotate(-14deg);
+}
+
+/* ---------- Bouton hamburger animé ---------- */
+.hamburger {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+.hamburger span {
+  width: 18px;
+  height: 2px;
+  background-color: var(--text-primary);
+  transition: transform var(--duration-base) var(--ease-in-out),
+    opacity var(--duration-base) var(--ease-in-out);
+}
+/* Transformation en croix quand le menu est ouvert */
+.hamburger.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---------- Overlay derrière le panneau latéral ---------- */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 45;
+  animation: fade-in var(--duration-base) var(--ease-in-out);
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- Panneau latéral repliable ---------- */
+.side-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(320px, 85vw);
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  z-index: 50;
+  padding: calc(64px + var(--space-md)) var(--space-md) var(--space-md);
+  overflow-y: auto;
+
+  /* Panneau caché par défaut, glisse depuis la gauche à l'ouverture */
+  transform: translateX(-100%);
+  transition: transform var(--duration-base) var(--ease-in-out);
+}
+.side-panel.is-open {
+  transform: translateX(0);
+}
+
+.side-panel-eyebrow {
+  margin-bottom: var(--space-sm);
+}
+
+.side-panel-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.side-panel-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.75em 0.85em;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  border-left: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  transition: border-color var(--duration-fast) var(--ease-in-out),
+    color var(--duration-fast) var(--ease-in-out),
+    background-color var(--duration-fast) var(--ease-in-out);
+}
+.side-panel-link:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-tertiary);
+}
+/* Lien correspondant à la page actuellement affichée */
+.side-panel-link.is-active {
+  color: var(--accent-steel);
+  border-left-color: var(--accent-steel);
+  background-color: var(--bg-tertiary);
+}
+
+.side-panel-link-number {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  width: 1.5em;
+  flex-shrink: 0;
+}
+.side-panel-link.is-active .side-panel-link-number {
+  color: var(--accent-steel);
+}
