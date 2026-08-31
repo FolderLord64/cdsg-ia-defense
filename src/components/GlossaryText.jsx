@@ -27,11 +27,16 @@ function escapeRegex(str) {
 // n'importe lequel des termes du glossaire, en testant d'abord
 // les termes les plus longs (pour éviter qu'un terme court comme
 // "IA" ne "mange" un terme plus long qui le contient).
+//
+// \b ... \b = "limite de mot" : impose que le terme soit entouré
+// d'une frontière de mot (début/fin de mot, espace, ponctuation)
+// des deux côtés. Sans ça, "API" matchait aussi à l'intérieur de
+// "rapidement" ou "rapidité" — bug corrigé grâce à ces \b.
 const sortedTerms = [...glossary].sort(
   (a, b) => b.term.length - a.term.length
 );
 const pattern = new RegExp(
-  `(${sortedTerms.map((g) => escapeRegex(g.term)).join('|')})`,
+  `\\b(${sortedTerms.map((g) => escapeRegex(g.term)).join('|')})\\b`,
   'gi' // g = toutes les occurrences, i = insensible à la casse
 );
 

@@ -15,6 +15,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './ThemeContext';
 import GridBackground from './components/GridBackground';
+import WaveBackground from './components/WaveBackground';
 import Navigation from './components/Navigation';
 import InstagramIcon from './components/InstagramIcon';
 import ScrollTopButton from './components/ScrollTopButton';
@@ -27,6 +28,7 @@ import NotFound from './pages/NotFound';
 export default function App() {
   return (
     <ThemeProvider>
+      <WaveBackground />
       <GridBackground />
       <Navigation />
 
