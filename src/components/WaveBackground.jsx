@@ -26,7 +26,7 @@ export default function WaveBackground() {
       {/* Vague avant : plus visible, défile vers la gauche */}
       <svg
         className="wave-layer wave-layer-front"
-        viewBox="0 0 2400 200"
+        viewBox="0 0 2400 400"
         preserveAspectRatio="none"
       >
         <path
@@ -43,7 +43,7 @@ export default function WaveBackground() {
           profondeur (parallaxe) plutôt qu'un simple aller-retour. */}
       <svg
         className="wave-layer wave-layer-back"
-        viewBox="0 0 2400 200"
+        viewBox="0 0 2400 400"
         preserveAspectRatio="none"
       >
         <path
